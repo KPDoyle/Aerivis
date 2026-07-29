@@ -5295,6 +5295,7 @@ input:focus-visible {
 .site-shell .partner-copy h2 span,
 .site-shell .demo-header h2 span {
   color: var(--site-azure);
+  margin-left: 0.12em;
 }
 
 .site-shell .section-heading p {
