@@ -335,6 +335,18 @@ export default function AerivisPrototype() {
                 sizes="(max-width: 820px) 92vw, 54vw"
               />
             </div>
+            <div className="device-signals" aria-label="Live concept telemetry">
+              {[
+                ["RH", "68%"],
+                ["PM₂.₅", "12"],
+                ["VOC", "0.18"],
+              ].map(([label, value]) => (
+                <span className="device-signal" key={label}>
+                  <small>{label}</small>
+                  <strong>{value}</strong>
+                </span>
+              ))}
+            </div>
             <div className="device-badge">
               <div className="device-badge-head">
                 <span>Collector 014</span>
