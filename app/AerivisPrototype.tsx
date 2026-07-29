@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 
 type Role =
@@ -324,10 +325,14 @@ export default function AerivisPrototype() {
 
           <div className="device-stage" aria-label="Aerivis Collector concept">
             <div className="device-image-wrap">
-              <img
+              <Image
                 className="device-image"
                 src="/aerivis-collector.jpg"
                 alt="Aerivis Collector concept with transparent sensor cartridge"
+                width={1280}
+                height={853}
+                priority
+                sizes="(max-width: 820px) 92vw, 54vw"
               />
             </div>
             <div className="device-badge">
