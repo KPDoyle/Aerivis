@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
+import AerivisMark from "./AerivisMark";
 
 type Role =
   | "Housing operations"
@@ -227,18 +228,6 @@ function downloadEvidencePack(stage: number, role: Role) {
   URL.revokeObjectURL(url);
 }
 
-function AerivisMark({ compact = false }: { compact?: boolean }) {
-  return (
-    <span
-      className={`brand-symbol${compact ? " compact" : ""}`}
-      aria-hidden="true"
-    >
-      <span className="brand-glyph" />
-      <span className="brand-orbit" />
-    </span>
-  );
-}
-
 export default function AerivisPrototype() {
   const [role, setRole] = useState<Role>("Housing operations");
   const [view, setView] = useState<View>("Case overview");
@@ -305,6 +294,7 @@ export default function AerivisPrototype() {
           <a href="#case-demo">Live case</a>
           <a href="#comparison">Market gap</a>
           <a href="#validation">Validation</a>
+          <a href="/brand">Brand lab</a>
           <a className="nav-cta" href="#case-demo">
             Open prototype <span aria-hidden="true">↗</span>
           </a>
