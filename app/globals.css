@@ -5685,6 +5685,30 @@ input:focus-visible {
   line-height: 1.72;
 }
 
+.site-shell .partner-types {
+  display: grid;
+  margin: 42px 0 0;
+  padding: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.36);
+  list-style: none;
+}
+
+.site-shell .partner-types li {
+  display: flex;
+  min-height: 52px;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.26);
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 11px;
+}
+
+.site-shell .partner-types li::before {
+  color: var(--site-navy);
+  content: "↗";
+  font-size: 10px;
+}
+
 .site-shell .partner-roadmap {
   border-top-color: rgba(255, 255, 255, 0.4);
 }

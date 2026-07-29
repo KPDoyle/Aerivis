@@ -31,10 +31,13 @@ test("server-renders the Aerivis partner prototype", async () => {
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /<title>Aerivis \| Environmental Exposure Intelligence<\/title>/i);
-  assert.match(html, /Make the invisible/);
-  assert.match(html, /Interactive case workspace/);
-  assert.match(html, /Competitor website review/);
+  assert.match(
+    html,
+    /<title>Aerivis \| Evidence Infrastructure for Housing Litigation<\/title>/i,
+  );
+  assert.match(html, /From disputed exposure/);
+  assert.match(html, /Interactive legal matter/);
+  assert.match(html, /The evidential opportunity/);
   assert.match(html, /Demo data only/);
   assert.match(html, /Housing operations/);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
@@ -48,11 +51,12 @@ test("removes the starter preview and ships product metadata", async () => {
   ]);
 
   assert.match(page, /AerivisPrototype/);
-  assert.match(layout, /Environmental exposure intelligence, end to end/);
-  assert.match(layout, /\/og\.png/);
+  assert.match(layout, /Evidence infrastructure for legal teams/);
+  assert.match(layout, /\/og-legal\.jpg/);
   assert.match(layout, /\/favicon\.ico/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   await access(new URL("public/favicon.ico", templateRoot));
+  await access(new URL("public/og-legal.jpg", templateRoot));
   await assert.rejects(access(new URL("app/_sites-preview", templateRoot)));
 });
 

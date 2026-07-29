@@ -229,13 +229,13 @@ function downloadEvidencePack(stage: number, role: Role) {
 }
 
 export default function AerivisPrototype() {
-  const [role, setRole] = useState<Role>("Housing operations");
+  const [role, setRole] = useState<Role>("Legal reviewer");
   const [view, setView] = useState<View>("Case overview");
-  const [stage, setStage] = useState(2);
+  const [stage, setStage] = useState(4);
   const [consents, setConsents] = useState({
     environmental: true,
     health: true,
-    legal: false,
+    legal: true,
   });
   const [toast, setToast] = useState("");
 
@@ -278,9 +278,9 @@ export default function AerivisPrototype() {
     <main className="site-shell">
       <div className="announcement">
         <span className="live-dot" aria-hidden="true" />
-        Partner release 03
+        Legal partner prototype
         <span className="announcement-separator" aria-hidden="true" />
-        Concept workflow · validation gates visible
+        Litigation workflow · validation gates visible
       </div>
 
       <header className="topbar">
@@ -292,13 +292,13 @@ export default function AerivisPrototype() {
           </span>
         </a>
         <nav className="topnav" aria-label="Primary navigation">
-          <a href="#system">System</a>
-          <a href="#case-demo">Live case</a>
-          <a href="#comparison">Market gap</a>
+          <a href="#system">Evidence model</a>
+          <a href="#case-demo">Legal matter</a>
+          <a href="#comparison">Why Aerivis</a>
           <a href="#validation">Validation</a>
-          <a href="/brand">Brand lab</a>
+          <a href="#legal-partner">Partner model</a>
           <a className="nav-cta" href="#case-demo">
-            Enter the case <span aria-hidden="true">↘</span>
+            Review the matter <span aria-hidden="true">↘</span>
           </a>
         </nav>
       </header>
@@ -309,36 +309,36 @@ export default function AerivisPrototype() {
         </div>
         <div className="hero-inner">
           <div className="hero-copy">
-            <p className="eyebrow">Airborne evidence infrastructure</p>
+            <p className="eyebrow">Evidence infrastructure for housing litigation</p>
             <h1>
-              <span>Make the invisible</span>
-              <em>admissible.</em>
+              <span>From disputed exposure</span>
+              <em>to defensible evidence.</em>
             </h1>
             <p className="hero-lead">
-              Aerivis turns a resident’s report, a controlled air sample and expert
-              interpretation into one defensible record—from first concern to
-              verified remediation.
+              For legal teams handling damp, mould and Awaab’s Law matters, Aerivis
+              connects controlled air capture, expert interpretation and a traceable
+              case record—ready for review, disclosure and CPR Part 35 workflows.
             </p>
             <div className="hero-actions">
               <button className="primary-button" onClick={showDemo}>
-                Start the live case <span aria-hidden="true">↘</span>
+                Review the legal matter <span aria-hidden="true">↘</span>
               </button>
               <a className="secondary-button" href="#system">
-                Explore the evidence chain <span aria-hidden="true">↓</span>
+                See the evidence model <span aria-hidden="true">↓</span>
               </a>
             </div>
             <ul className="hero-assurance">
               <li>
                 <strong>01</strong>
-                Role-scoped
+                Method-visible
               </li>
               <li>
                 <strong>02</strong>
-                Consent-led
+                Custody-traced
               </li>
               <li>
                 <strong>03</strong>
-                Custody-traced
+                Expert-led
               </li>
             </ul>
           </div>
@@ -386,22 +386,22 @@ export default function AerivisPrototype() {
           </div>
         </div>
 
-        <div className="hero-metrics" aria-label="Awaab's Law timeframes">
+        <div className="hero-metrics" aria-label="Aerivis legal evidence model">
           <div className="hero-metric">
             <strong>24h</strong>
-            <span>Emergency hazard response</span>
+            <span>Controlled airborne capture</span>
           </div>
           <div className="hero-metric">
-            <strong>10</strong>
-            <span>Working days to investigate</span>
+            <strong>1</strong>
+            <span>Versioned matter record</span>
           </div>
           <div className="hero-metric">
-            <strong>3</strong>
-            <span>Working days for written summary</span>
+            <strong>6</strong>
+            <span>Role-scoped participants</span>
           </div>
           <div className="hero-metric">
-            <strong>5</strong>
-            <span>Working days to make safe</span>
+            <strong>35</strong>
+            <span>CPR Part 35 workflow boundary</span>
           </div>
         </div>
       </section>
@@ -409,35 +409,35 @@ export default function AerivisPrototype() {
       <section className="section" id="system">
         <div className="section-inner">
           <div className="section-heading">
-            <p className="section-kicker">One evidence spine</p>
+            <p className="section-kicker">Built for instructed matters</p>
             <div>
               <h2>
-                From air to action.{" "}
-                <span> One unbroken record.</span>
+                Stop rebuilding the case{" "}
+                <span> from disconnected evidence.</span>
               </h2>
               <p>
-                The market already assembles skilled field, laboratory, fungal,
-                medical and legal contributors. Aerivis turns that chain into an
-                operating system: secure handoffs, shared deadlines, explicit
-                limitations and a single evidence history.
+                Aerivis gives the instructed legal team one controlled route through
+                field capture, laboratory analysis, clinical context and expert
+                review. Method, custody, consent, versions and limitations remain
+                attached to the matter from instruction to bundle.
               </p>
             </div>
           </div>
 
           <div className="system-flow">
             {[
-              ["01", "Resident", "Report, access needs, consent and updates."],
-              ["02", "Housing", "Triage, statutory clock, works and oversight."],
-              ["03", "Field", "Inspect, pair, place and seal the sample."],
-              ["04", "Laboratory", "Accession, controls, analysis and QC."],
-              ["05", "Clinical", "Review consented context within clear limits."],
-              ["06", "Legal", "Trace method, custody and expert sign-off."],
+              ["01", "Instruct", "Define the legal question, scope, parties and permissions."],
+              ["02", "Preserve", "Pair, place and seal a controlled sample with provenance."],
+              ["03", "Analyse", "Accession, controls, method version and laboratory QC."],
+              ["04", "Interpret", "Independent fungal and clinical context within clear limits."],
+              ["05", "Review", "Test assumptions, custody, consent and expert boundaries."],
+              ["06", "Bundle", "Release a traceable pack for advice, disclosure or proceedings."],
             ].map(([index, title, body]) => (
               <article className="flow-card" key={index}>
                 <span className="flow-card-index">{index}</span>
                 <h3>{title}</h3>
                 <p>{body}</p>
-                <span className="flow-card-status">Role-scoped access</span>
+                <span className="flow-card-status">Evidence checkpoint</span>
               </article>
             ))}
           </div>
@@ -447,15 +447,16 @@ export default function AerivisPrototype() {
       <section className="demo-section" id="case-demo">
         <div className="demo-header">
           <div>
-            <p className="eyebrow">Interactive case workspace</p>
+            <p className="eyebrow">Interactive legal matter</p>
             <h2>
-              The product is{" "}
-              <span> the proof.</span>
+              Review the evidence{" "}
+              <span> before you instruct us.</span>
             </h2>
           </div>
           <p>
-            Step into a working case. Switch roles, advance the evidence, control
-            consent and export a traceable pack—all without leaving the record.
+            Start in the legal-reviewer view. Trace the case history, inspect custody
+            and consent, switch specialist roles and export a prototype evidence
+            pack.
           </p>
         </div>
 
@@ -473,11 +474,11 @@ export default function AerivisPrototype() {
               <AerivisMark compact />
               <span className="app-brand-copy">
                 <strong>AERIVIS</strong>
-                <span>Compliance workspace</span>
+                <span>Litigation evidence</span>
               </span>
             </div>
 
-            <p className="rail-label">Case workspace</p>
+            <p className="rail-label">Matter workspace</p>
             <nav className="rail-nav">
               {(
                 [
@@ -563,16 +564,16 @@ export default function AerivisPrototype() {
                 <h3>14 Calder Row, Flat 8</h3>
                 <div className="case-meta">
                   <span>AV-26-0418</span>
-                  <span>Significant damp & mould</span>
-                  <span>Resident update due</span>
+                  <span>Housing disrepair · damp & mould</span>
+                  <span>Solicitor review due</span>
                 </div>
               </div>
               <button
                 className="case-chip"
                 onClick={() => setToast("Case switcher contains 18 demo records.")}
               >
-                <span>Portfolio · North region</span>
-                <strong>18 open cases ▾</strong>
+                <span>Legal panel · housing team</span>
+                <strong>18 open matters ▾</strong>
               </button>
             </div>
 
@@ -731,18 +732,17 @@ export default function AerivisPrototype() {
       <section className="compare-section" id="comparison">
         <div className="compare-grid">
           <div className="compare-intro">
-            <p className="section-kicker">Competitor website review</p>
+            <p className="section-kicker">The evidential opportunity</p>
             <h2>
-              Keep the expertise.{" "}
-              <span> Rebuild the evidence.</span>
+              A better instruction{" "}
+              <span> for complex housing matters.</span>
             </h2>
             <p>
-              Genetix’s public website presents a strong multidisciplinary service:
-              trained sampling, contract-lab sequencing, consented health-record
-              access, fungal interpretation, medical review and CPR 35 positioning.
-              The opportunity is to make that chain digital, continuous and
-              portfolio-operable—and to test airborne exposure, not only the sampled
-              surface.
+              Genetix’s public offering validates demand for a multidisciplinary
+              service. Aerivis is designed as the law-firm-facing operating layer:
+              controlled airborne capture, structured expert handoffs and one
+              versioned record that can be interrogated before advice, settlement
+              or proceedings.
             </p>
             <a
               className="source-link"
@@ -757,8 +757,8 @@ export default function AerivisPrototype() {
           <div className="comparison-table" role="table" aria-label="Process comparison">
             <div className="comparison-row header" role="row">
               <span role="columnheader">Evidence question</span>
-              <span role="columnheader">What Genetix publicly describes</span>
-              <span role="columnheader">Aerivis proposed operating model</span>
+              <span role="columnheader">What the market publicly offers</span>
+              <span role="columnheader">What Aerivis gives legal teams</span>
             </div>
             {publicComparison.map((row) => (
               <div className="comparison-row" role="row" key={row.topic}>
@@ -778,16 +778,17 @@ export default function AerivisPrototype() {
       <section className="validation-section" id="validation">
         <div className="section-inner">
           <div className="section-heading">
-            <p className="section-kicker">Honest by design</p>
+            <p className="section-kicker">Litigation-grade candour</p>
             <div>
               <h2>
-                Confidence is earned.{" "}
-                <span> Uncertainty stays visible.</span>
+                No black box.{" "}
+                <span> No hidden leap to causation.</span>
               </h2>
               <p>
-                Aerivis’s technical thesis is plausible, but the interpretation layer
-                is not yet de-risked. The prototype makes provenance, uncertainty and
-                validation status part of the product—not footnotes added later.
+                The legal value is not certainty at any cost. It is a transparent
+                record of what was measured, how it was handled, who interpreted it
+                and where the evidence stops. Scientific gates and expert limitations
+                remain visible throughout the matter.
               </p>
             </div>
           </div>
@@ -841,47 +842,53 @@ export default function AerivisPrototype() {
         </div>
       </section>
 
-      <section className="partner-section">
+      <section className="partner-section" id="legal-partner">
         <div className="partner-grid">
           <div className="partner-copy">
-            <p className="section-kicker">Partner pathway</p>
+            <p className="section-kicker">For law firms and legal service groups</p>
             <h2>
-              Turn the concept into{" "}
-              <span> the category standard.</span>
+              Shape the evidence standard{" "}
+              <span> before the category is defined.</span>
             </h2>
             <p>
-              The prototype is ready to align a hardware, laboratory, clinical and
-              housing partner around one end-state. Commercial launch remains gated
-              by method validation, information governance, partner contracting and
-              clearance of the identified non-compete.
+              We are seeking a legal design partner to co-create the instruction
+              criteria, disclosure structure, expert boundaries and first controlled
+              pilot. This is a service partnership—not another software licence.
+              Launch remains gated by validation, governance and non-compete
+              clearance.
             </p>
+            <ul className="partner-types" aria-label="Ideal legal partners">
+              <li>Housing disrepair practices</li>
+              <li>Defendant and insurer panels</li>
+              <li>Expert and litigation-service groups</li>
+            </ul>
           </div>
 
           <div className="partner-roadmap">
             {[
               [
                 "01",
-                "Co-design the service blueprint",
-                "Lock roles, evidence standard, data boundary, lab accession and partner economics.",
-                "Now",
+                "Legal design workshop",
+                "Define matter acceptance, evidential questions, disclosure needs, expert roles and commercial fit.",
+                "Start",
               ],
               [
                 "02",
-                "Prove the measurement chain",
-                "Prototype Collector and Cartridge; validate recovery, QC, secure handoff and usability.",
-                "0–6 months",
+                "Co-author the evidence protocol",
+                "Set the method record, custody standard, limitation schedule and bundle structure legal teams require.",
+                "Co-design",
               ],
               [
                 "03",
-                "Run controlled field pilots",
-                "Compare across 50–100 buildings, conventional methods and pre/post remediation cases.",
-                "6–12 months",
+                "Run a controlled matter pilot",
+                "Subject to clearance and validation gates, test the workflow on suitable pre-action and remediation matters.",
+                "Pilot",
               ],
               [
                 "04",
-                "Convert to portfolio infrastructure",
-                "After clearance and evidence gates, move from paid pilot to recurring compliance workspace.",
-                "12–18 months",
+                "Scale the instruction model",
+                "Create a repeatable service for housing teams, legal panels and expert networks after pilot review.",
+                "Post-pilot",
               ],
             ].map(([index, title, body, state]) => (
               <div className="roadmap-item" key={index}>
@@ -899,28 +906,28 @@ export default function AerivisPrototype() {
 
       <section className="final-cta">
         <div className="final-card">
-          <p className="section-kicker">The partner proposition</p>
+          <p className="section-kicker">Legal design partners</p>
           <h2>
-            One case. Every expert.
-            <em> No broken handoffs.</em>
+            Help define the evidence standard
+            <em> your cases need.</em>
           </h2>
           <div className="final-side">
             <p>
-              Use the working prototype to agree the partner model, field evidence
-              standard and first validation pilot.
+              Use the working matter to align your litigation team, our technical
+              workflow and the first controlled legal pilot.
             </p>
             <button className="dark-button" onClick={showDemo}>
-              Return to the live case ↑
+              Open the legal matter ↑
             </button>
           </div>
         </div>
 
         <footer className="footer">
           <p className="footer-copy">
-            Partner prototype · July 2026. Product imagery is illustrative. All case
-            data is fictional. Scientific, clinical and legal outputs shown are
-            proposed workflow examples and require validation, governance and
-            qualified professional review before operational use.
+            Legal partnership prototype · July 2026. Product imagery is illustrative.
+            All matter data is fictional. Scientific, clinical and legal outputs
+            shown are proposed workflow examples and require validation, governance
+            and qualified professional review before operational use.
           </p>
           <div className="footer-links">
             <a

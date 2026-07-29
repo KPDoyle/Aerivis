@@ -15,9 +15,9 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     metadataBase: new URL(origin),
-    title: "Aerivis | Environmental Exposure Intelligence",
+    title: "Aerivis | Evidence Infrastructure for Housing Litigation",
     description:
-      "A partner prototype for end-to-end housing exposure evidence, from report and sampling to remediation and legal handoff.",
+      "A legal partnership prototype connecting controlled air capture, expert interpretation and a traceable evidence record for housing litigation.",
     icons: {
       icon: [
         { url: "/favicon.svg", type: "image/svg+xml" },
@@ -26,23 +26,25 @@ export async function generateMetadata(): Promise<Metadata> {
       shortcut: "/favicon.ico",
     },
     openGraph: {
-      title: "Aerivis",
-      description: "Environmental exposure intelligence, end to end.",
+      title: "Aerivis | From disputed exposure to defensible evidence",
+      description:
+        "Evidence infrastructure for legal teams handling damp, mould and Awaab’s Law matters.",
       type: "website",
       images: [
         {
-          url: `${origin}/og.png`,
+          url: `${origin}/og-legal.jpg`,
           width: 1200,
           height: 630,
-          alt: "Aerivis partner prototype",
+          alt: "Aerivis legal partnership prototype",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "Aerivis",
-      description: "Environmental exposure intelligence, end to end.",
-      images: [`${origin}/og.png`],
+      title: "Aerivis | From disputed exposure to defensible evidence",
+      description:
+        "Evidence infrastructure for legal teams handling damp, mould and Awaab’s Law matters.",
+      images: [`${origin}/og-legal.jpg`],
     },
   };
 }
