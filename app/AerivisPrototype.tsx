@@ -412,7 +412,7 @@ export default function AerivisPrototype() {
             <p className="section-kicker">One evidence spine</p>
             <div>
               <h2>
-                From air to action.
+                From air to action.{" "}
                 <span> One unbroken record.</span>
               </h2>
               <p>
@@ -449,7 +449,7 @@ export default function AerivisPrototype() {
           <div>
             <p className="eyebrow">Interactive case workspace</p>
             <h2>
-              The product is
+              The product is{" "}
               <span> the proof.</span>
             </h2>
           </div>
@@ -733,7 +733,7 @@ export default function AerivisPrototype() {
           <div className="compare-intro">
             <p className="section-kicker">Competitor website review</p>
             <h2>
-              Keep the expertise.
+              Keep the expertise.{" "}
               <span> Rebuild the evidence.</span>
             </h2>
             <p>
@@ -781,7 +781,7 @@ export default function AerivisPrototype() {
             <p className="section-kicker">Honest by design</p>
             <div>
               <h2>
-                Confidence is earned.
+                Confidence is earned.{" "}
                 <span> Uncertainty stays visible.</span>
               </h2>
               <p>
@@ -846,7 +846,7 @@ export default function AerivisPrototype() {
           <div className="partner-copy">
             <p className="section-kicker">Partner pathway</p>
             <h2>
-              Turn the concept into
+              Turn the concept into{" "}
               <span> the category standard.</span>
             </h2>
             <p>
