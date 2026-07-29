@@ -86,14 +86,14 @@ test("ships the interactive Aerivis brand lab", async () => {
 
   assert.match(brandPage, /Aerivis Brand Lab/);
   assert.match(brandStudio, /Interactive Aerivis logo demo/);
-  assert.match(brandStudio, /Purposeful motion/);
-  assert.match(brandStudio, /Small-size clarity/);
+  assert.match(brandStudio, /Purposeful motion only/);
+  assert.match(brandStudio, /Less symbol/);
   assert.match(sharedMark, /brand-symbol/);
 
   const response = await render("/brand");
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.match(html, /Aerivis Brand Lab/);
-  assert.match(html, /A mark for evidence/);
-  assert.match(html, /Brand audit/);
+  assert.match(html, /Air becomes/);
+  assert.match(html, /Brand stress test/);
 });
