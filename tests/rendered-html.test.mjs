@@ -32,7 +32,7 @@ test("server-renders the Aerivis partner prototype", async () => {
 
   const html = await response.text();
   assert.match(html, /<title>Aerivis \| Environmental Exposure Intelligence<\/title>/i);
-  assert.match(html, /Evidence that moves/);
+  assert.match(html, /Make the invisible/);
   assert.match(html, /Interactive case workspace/);
   assert.match(html, /Competitor website review/);
   assert.match(html, /Demo data only/);
