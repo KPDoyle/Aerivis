@@ -25,7 +25,7 @@ async function render(pathname = "/") {
   );
 }
 
-test("server-renders the Aerivis partner prototype", async () => {
+test("server-renders the Aerivis resident support prototype", async () => {
   const response = await render();
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
@@ -33,11 +33,13 @@ test("server-renders the Aerivis partner prototype", async () => {
   const html = await response.text();
   assert.match(
     html,
-    /<title>Aerivis \| Evidence Infrastructure for Housing Litigation<\/title>/i,
+    /<title>Aerivis \| Mould Evidence and Legal Support for Tenants<\/title>/i,
   );
-  assert.match(html, /From disputed exposure/);
-  assert.match(html, /Interactive legal matter/);
-  assert.match(html, /The evidential opportunity/);
+  assert.match(html, /Your home has mould/);
+  assert.match(html, /Could your situation/);
+  assert.match(html, /Your case, step by step/);
+  assert.match(html, /Your case needs more/);
+  assert.match(html, /The law firm is the partner/);
   assert.match(html, /Demo data only/);
   assert.match(html, /Housing operations/);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
@@ -51,12 +53,12 @@ test("removes the starter preview and ships product metadata", async () => {
   ]);
 
   assert.match(page, /AerivisPrototype/);
-  assert.match(layout, /Evidence infrastructure for legal teams/);
-  assert.match(layout, /\/og-legal\.jpg/);
+  assert.match(layout, /resident-first service helping tenants/);
+  assert.match(layout, /\/og-resident\.jpg/);
   assert.match(layout, /\/favicon\.ico/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   await access(new URL("public/favicon.ico", templateRoot));
-  await access(new URL("public/og-legal.jpg", templateRoot));
+  await access(new URL("public/og-resident.jpg", templateRoot));
   await assert.rejects(access(new URL("app/_sites-preview", templateRoot)));
 });
 

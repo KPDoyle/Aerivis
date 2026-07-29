@@ -13,6 +13,7 @@ type Role =
   | "Resident";
 
 type View = "Case overview" | "Evidence" | "Custody" | "People" | "Reports";
+type IntakeAnswer = "yes" | "no" | "unsure";
 
 const roles: Role[] = [
   "Housing operations",
@@ -136,48 +137,67 @@ const baseSteps = [
   },
 ];
 
+const residentQuestions = [
+  {
+    title: "Do you rent your home?",
+    body: "This may be from a council, housing association or private landlord.",
+  },
+  {
+    title: "Is there visible damp or mould in the home?",
+    body: "Include recurring patches, condensation, staining or a persistent musty smell.",
+  },
+  {
+    title: "Have you told your landlord or agent in writing?",
+    body: "An email, repair portal message, letter or text can help establish a clear record.",
+  },
+  {
+    title: "Is anyone in the household experiencing symptoms you are concerned about?",
+    body: "Aerivis cannot diagnose illness. A clinician may review relevant health context with consent.",
+  },
+];
+
 const publicComparison = [
   {
     topic: "Capture",
     public:
-      "A trained specialist takes surface swab samples in the home and ships them under guidance.",
+      "Photos or a surface swab may record one visible patch at one moment, with limited environmental context.",
     aerivis:
-      "A controlled 24-hour volumetric air sample is paired with temperature, humidity, particulate, time and air-volume context.",
+      "A controlled 24-hour air sample is paired with temperature, humidity, particulate, time and air-volume context.",
+  },
+  {
+    topic: "Record",
+    public:
+      "Reports, repair messages, appointments and health concerns can sit across phones, inboxes and organisations.",
+    aerivis:
+      "The resident’s history, property evidence, sample identity, custody events and next actions remain in one case record.",
   },
   {
     topic: "Laboratory",
     public:
-      "An independent contract laboratory sequences swab material to identify fungal species.",
+      "A result can arrive without enough method, quality-control or chain-of-custody detail for legal scrutiny.",
     aerivis:
-      "A versioned, quality-controlled partner-lab workflow links accession, controls, biological results and method limitations to the case.",
+      "A partner laboratory works per case, with accession, controls, method version and limitations attached to the result.",
   },
   {
-    topic: "People",
+    topic: "Health context",
     public:
-      "Health-record access is described via an NHS partner practice, subject to formal consent.",
+      "Residents may be asked to repeat sensitive information without a clear view of who can access it.",
     aerivis:
-      "A consent centre gives purpose-limited access to the resident, clinical reviewer and legal team with visible expiry and revocation.",
+      "A clinician is paid by the hour for consented review. Environmental evidence is never presented as a diagnosis.",
   },
   {
-    topic: "Interpretation",
+    topic: "Legal route",
     public:
-      "Fungal and medically qualified experts interpret laboratory and occupant-health information.",
+      "The resident may be left to assemble a claim while evidence, experts and legal review remain disconnected.",
     aerivis:
-      "The same expert chain is orchestrated digitally, with independent sign-offs, structured limitations and no automated clinical diagnosis.",
+      "The partner law firm owns the client relationship, assesses merits and decides whether repairs or compensation should be pursued.",
   },
   {
-    topic: "Litigation",
+    topic: "Outcome",
     public:
-      "The public site says assessments follow CPR 35 guidance and are suitable for civil proceedings if needed.",
+      "A mould result alone cannot prove health causation, landlord liability or entitlement to compensation.",
     aerivis:
-      "The proposed evidence pack adds a traceable method record, custody events, data versions, consent history and expert declaration.",
-  },
-  {
-    topic: "Portfolio",
-    public:
-      "The public site presents an end-to-end professional service and enquiry-led customer journey.",
-    aerivis:
-      "A live operating layer tracks deadlines, repeat cases, remediation outcomes and exposure patterns across a housing portfolio.",
+      "Aerivis makes the evidence and its limits visible. The solicitor advises on the claim; no result or award is guaranteed.",
   },
 ];
 
@@ -229,14 +249,16 @@ function downloadEvidencePack(stage: number, role: Role) {
 }
 
 export default function AerivisPrototype() {
-  const [role, setRole] = useState<Role>("Legal reviewer");
+  const [role, setRole] = useState<Role>("Resident");
   const [view, setView] = useState<View>("Case overview");
-  const [stage, setStage] = useState(4);
+  const [stage, setStage] = useState(1);
   const [consents, setConsents] = useState({
     environmental: true,
-    health: true,
-    legal: true,
+    health: false,
+    legal: false,
   });
+  const [intakeStep, setIntakeStep] = useState(0);
+  const [intakeAnswers, setIntakeAnswers] = useState<IntakeAnswer[]>([]);
   const [toast, setToast] = useState("");
 
   useEffect(() => {
@@ -274,13 +296,32 @@ export default function AerivisPrototype() {
     document.getElementById("case-demo")?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const showResidentCheck = () => {
+    document.getElementById("resident-check")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const recordIntakeAnswer = (answer: IntakeAnswer) => {
+    const nextAnswers = [...intakeAnswers];
+    nextAnswers[intakeStep] = answer;
+    setIntakeAnswers(nextAnswers);
+    setIntakeStep((current) => Math.min(current + 1, residentQuestions.length));
+  };
+
+  const restartIntake = () => {
+    setIntakeStep(0);
+    setIntakeAnswers([]);
+  };
+
+  const intakeMaySuitReview =
+    intakeAnswers[0] === "yes" && intakeAnswers[1] === "yes";
+
   return (
     <main className="site-shell">
       <div className="announcement">
         <span className="live-dot" aria-hidden="true" />
-        Legal partner prototype
+        Resident support prototype
         <span className="announcement-separator" aria-hidden="true" />
-        Litigation workflow · validation gates visible
+        Damp, mould and housing disrepair
       </div>
 
       <header className="topbar">
@@ -292,13 +333,13 @@ export default function AerivisPrototype() {
           </span>
         </a>
         <nav className="topnav" aria-label="Primary navigation">
-          <a href="#system">Evidence model</a>
-          <a href="#case-demo">Legal matter</a>
-          <a href="#comparison">Why Aerivis</a>
-          <a href="#validation">Validation</a>
-          <a href="#legal-partner">Partner model</a>
-          <a className="nav-cta" href="#case-demo">
-            Review the matter <span aria-hidden="true">↘</span>
+          <a href="#system">How it works</a>
+          <a href="#resident-check">Check my situation</a>
+          <a href="#case-demo">My case</a>
+          <a href="#comparison">Evidence</a>
+          <a href="#legal-partner">For law firms</a>
+          <a className="nav-cta" href="#resident-check">
+            Start case check <span aria-hidden="true">↘</span>
           </a>
         </nav>
       </header>
@@ -309,36 +350,37 @@ export default function AerivisPrototype() {
         </div>
         <div className="hero-inner">
           <div className="hero-copy">
-            <p className="eyebrow">Evidence infrastructure for housing litigation</p>
+            <p className="eyebrow">Support for tenants living with damp and mould</p>
             <h1>
-              <span>From disputed exposure</span>
-              <em>to defensible evidence.</em>
+              <span>Your home has mould.</span>
+              <em>Your family deserves answers.</em>
             </h1>
             <p className="hero-lead">
-              For legal teams handling damp, mould and Awaab’s Law matters, Aerivis
-              connects controlled air capture, expert interpretation and a traceable
-              case record—ready for review, disclosure and CPR Part 35 workflows.
+              Aerivis helps tenants document what is happening, preserve a
+              traceable evidence record and connect their case with a partner law
+              firm—so a solicitor can assess whether to pursue repairs and
+              compensation.
             </p>
             <div className="hero-actions">
-              <button className="primary-button" onClick={showDemo}>
-                Review the legal matter <span aria-hidden="true">↘</span>
+              <button className="primary-button" onClick={showResidentCheck}>
+                Check your situation <span aria-hidden="true">↘</span>
               </button>
               <a className="secondary-button" href="#system">
-                See the evidence model <span aria-hidden="true">↓</span>
+                See how your case is built <span aria-hidden="true">↓</span>
               </a>
             </div>
             <ul className="hero-assurance">
               <li>
                 <strong>01</strong>
-                Method-visible
+                Private first step
               </li>
               <li>
                 <strong>02</strong>
-                Custody-traced
+                Consent controlled
               </li>
               <li>
                 <strong>03</strong>
-                Expert-led
+                No outcome promised
               </li>
             </ul>
           </div>
@@ -386,22 +428,111 @@ export default function AerivisPrototype() {
           </div>
         </div>
 
-        <div className="hero-metrics" aria-label="Aerivis legal evidence model">
+        <div className="hero-metrics" aria-label="Aerivis resident support model">
+          <div className="hero-metric">
+            <strong>1</strong>
+            <span>Protected case journey</span>
+          </div>
           <div className="hero-metric">
             <strong>24h</strong>
             <span>Controlled airborne capture</span>
           </div>
           <div className="hero-metric">
-            <strong>1</strong>
-            <span>Versioned matter record</span>
+            <strong>Law firm</strong>
+            <span>Leads the claim</span>
           </div>
           <div className="hero-metric">
-            <strong>6</strong>
-            <span>Role-scoped participants</span>
+            <strong>You</strong>
+            <span>Control consent</span>
           </div>
-          <div className="hero-metric">
-            <strong>35</strong>
-            <span>CPR Part 35 workflow boundary</span>
+        </div>
+      </section>
+
+      <section className="resident-check-section" id="resident-check">
+        <div className="resident-check-grid">
+          <div className="resident-check-intro">
+            <p className="section-kicker">A private first step</p>
+            <h2>
+              Could your situation{" "}
+              <span>be suitable for legal review?</span>
+            </h2>
+            <p>
+              Answer four simple questions. This prototype does not ask for your
+              name, address or health records, and nothing is sent or stored.
+            </p>
+            <div className="resident-check-note">
+              <span>01</span>
+              <p>
+                In a live service, a partner law firm—not Aerivis—would assess the
+                legal merits of your case and explain your options.
+              </p>
+            </div>
+          </div>
+
+          <div className="intake-card" aria-live="polite">
+            {intakeStep < residentQuestions.length ? (
+              <>
+                <div className="intake-progress">
+                  <span>
+                    Question {intakeStep + 1} of {residentQuestions.length}
+                  </span>
+                  <div className="intake-progress-track" aria-hidden="true">
+                    <i
+                      style={{
+                        width: `${((intakeStep + 1) / residentQuestions.length) * 100}%`,
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className="intake-question">
+                  <span className="intake-index">
+                    {String(intakeStep + 1).padStart(2, "0")}
+                  </span>
+                  <h3>{residentQuestions[intakeStep].title}</h3>
+                  <p>{residentQuestions[intakeStep].body}</p>
+                </div>
+                <div className="intake-actions">
+                  {(
+                    [
+                      ["yes", "Yes"],
+                      ["no", "No"],
+                      ["unsure", "Not sure"],
+                    ] as [IntakeAnswer, string][]
+                  ).map(([answer, label]) => (
+                    <button key={answer} onClick={() => recordIntakeAnswer(answer)}>
+                      {label}
+                      <span aria-hidden="true">→</span>
+                    </button>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div className="intake-outcome">
+                <span className="intake-outcome-label">Your next step</span>
+                <h3>
+                  {intakeMaySuitReview
+                    ? "Your situation may be suitable for review by a partner law firm."
+                    : "Start by building a clear record of what is happening."}
+                </h3>
+                <p>
+                  {intakeMaySuitReview
+                    ? "A solicitor would still need to check the tenancy, notice given, evidence, losses and legal merits before deciding whether to act."
+                    : "Keep photographs, dates, repair reports and written messages. A law firm can then decide whether it is able to review the matter."}
+                </p>
+                <div className="intake-outcome-actions">
+                  <button className="primary-button" onClick={showDemo}>
+                    See the case journey <span aria-hidden="true">↘</span>
+                  </button>
+                  <button className="text-button" onClick={restartIntake}>
+                    Start again
+                  </button>
+                </div>
+              </div>
+            )}
+            <p className="intake-disclaimer">
+              This check does not assess legal merits, diagnose illness or
+              guarantee compensation.
+            </p>
           </div>
         </div>
       </section>
@@ -409,35 +540,35 @@ export default function AerivisPrototype() {
       <section className="section" id="system">
         <div className="section-inner">
           <div className="section-heading">
-            <p className="section-kicker">Built for instructed matters</p>
+            <p className="section-kicker">What happens after you ask for help</p>
             <div>
               <h2>
-                Stop rebuilding the case{" "}
-                <span> from disconnected evidence.</span>
+                Tell your story once.{" "}
+                <span>The evidence moves with your case.</span>
               </h2>
               <p>
-                Aerivis gives the instructed legal team one controlled route through
-                field capture, laboratory analysis, clinical context and expert
-                review. Method, custody, consent, versions and limitations remain
-                attached to the matter from instruction to bundle.
+                Your report, property record, controlled sample, laboratory result
+                and consented specialist reviews are joined into one traceable
+                journey. You can see what happens next while the partner law firm
+                decides how the evidence should be used.
               </p>
             </div>
           </div>
 
           <div className="system-flow">
             {[
-              ["01", "Instruct", "Define the legal question, scope, parties and permissions."],
-              ["02", "Preserve", "Pair, place and seal a controlled sample with provenance."],
-              ["03", "Analyse", "Accession, controls, method version and laboratory QC."],
-              ["04", "Interpret", "Independent fungal and clinical context within clear limits."],
-              ["05", "Review", "Test assumptions, custody, consent and expert boundaries."],
-              ["06", "Bundle", "Release a traceable pack for advice, disclosure or proceedings."],
+              ["01", "Check", "Describe the home, the mould and what you have already reported."],
+              ["02", "Record", "Bring dates, photographs, messages and repair history into one timeline."],
+              ["03", "Capture", "Take a controlled air sample with a sealed, identity-linked cartridge."],
+              ["04", "Review", "Add laboratory findings and consented clinical context within clear limits."],
+              ["05", "Litigate", "The partner law firm assesses merits and decides whether to pursue the claim."],
+              ["06", "Redress", "Repairs and compensation are pursued only where the evidence and legal merits support them."],
             ].map(([index, title, body]) => (
               <article className="flow-card" key={index}>
                 <span className="flow-card-index">{index}</span>
                 <h3>{title}</h3>
                 <p>{body}</p>
-                <span className="flow-card-status">Evidence checkpoint</span>
+                <span className="flow-card-status">Resident-visible stage</span>
               </article>
             ))}
           </div>
@@ -447,16 +578,16 @@ export default function AerivisPrototype() {
       <section className="demo-section" id="case-demo">
         <div className="demo-header">
           <div>
-            <p className="eyebrow">Interactive legal matter</p>
+            <p className="eyebrow">Your case, step by step</p>
             <h2>
-              Review the evidence{" "}
-              <span> before you instruct us.</span>
+              See exactly what happens{" "}
+              <span>to your evidence.</span>
             </h2>
           </div>
           <p>
-            Start in the legal-reviewer view. Trace the case history, inspect custody
-            and consent, switch specialist roles and export a prototype evidence
-            pack.
+            Start in the resident view. Follow the case, control consent and see
+            how the field specialist, laboratory, clinician and partner law firm
+            contribute without making unsupported promises.
           </p>
         </div>
 
@@ -474,11 +605,11 @@ export default function AerivisPrototype() {
               <AerivisMark compact />
               <span className="app-brand-copy">
                 <strong>AERIVIS</strong>
-                <span>Litigation evidence</span>
+                <span>Resident evidence case</span>
               </span>
             </div>
 
-            <p className="rail-label">Matter workspace</p>
+            <p className="rail-label">My case</p>
             <nav className="rail-nav">
               {(
                 [
@@ -564,16 +695,16 @@ export default function AerivisPrototype() {
                 <h3>14 Calder Row, Flat 8</h3>
                 <div className="case-meta">
                   <span>AV-26-0418</span>
-                  <span>Housing disrepair · damp & mould</span>
-                  <span>Solicitor review due</span>
+                  <span>Reported damp & mould</span>
+                  <span>Landlord notified</span>
                 </div>
               </div>
               <button
                 className="case-chip"
                 onClick={() => setToast("Case switcher contains 18 demo records.")}
               >
-                <span>Legal panel · housing team</span>
-                <strong>18 open matters ▾</strong>
+                <span>My case · partner law firm</span>
+                <strong>1 active case ▾</strong>
               </button>
             </div>
 
@@ -732,33 +863,27 @@ export default function AerivisPrototype() {
       <section className="compare-section" id="comparison">
         <div className="compare-grid">
           <div className="compare-intro">
-            <p className="section-kicker">The evidential opportunity</p>
+            <p className="section-kicker">
+              Why ordinary mould evidence can let residents down
+            </p>
             <h2>
-              A better instruction{" "}
-              <span> for complex housing matters.</span>
+              Your case needs more{" "}
+              <span>than a surface result.</span>
             </h2>
             <p>
-              Genetix’s public offering validates demand for a multidisciplinary
-              service. Aerivis is designed as the law-firm-facing operating layer:
-              controlled airborne capture, structured expert handoffs and one
-              versioned record that can be interrogated before advice, settlement
-              or proceedings.
+              A photograph or swab can be useful, but a contested housing claim may
+              also need the condition history, controlled environmental context,
+              chain of custody, method limitations, expert boundaries and the
+              landlord’s response. Aerivis keeps that journey connected.
             </p>
-            <a
-              className="source-link"
-              href="https://www.genetix.io/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Review the public Genetix journey ↗
-            </a>
+            <span className="source-link">Evidence is strongest when its limits are visible.</span>
           </div>
 
           <div className="comparison-table" role="table" aria-label="Process comparison">
             <div className="comparison-row header" role="row">
               <span role="columnheader">Evidence question</span>
-              <span role="columnheader">What the market publicly offers</span>
-              <span role="columnheader">What Aerivis gives legal teams</span>
+              <span role="columnheader">A fragmented route</span>
+              <span role="columnheader">The Aerivis resident-to-law-firm model</span>
             </div>
             {publicComparison.map((row) => (
               <div className="comparison-row" role="row" key={row.topic}>
@@ -778,17 +903,19 @@ export default function AerivisPrototype() {
       <section className="validation-section" id="validation">
         <div className="section-inner">
           <div className="section-heading">
-            <p className="section-kicker">Litigation-grade candour</p>
+            <p className="section-kicker">
+              What Aerivis can—and cannot—prove
+            </p>
             <div>
               <h2>
-                No black box.{" "}
-                <span> No hidden leap to causation.</span>
+                Evidence may strengthen a claim.{" "}
+                <span>It cannot promise the result.</span>
               </h2>
               <p>
-                The legal value is not certainty at any cost. It is a transparent
-                record of what was measured, how it was handled, who interpreted it
-                and where the evidence stops. Scientific gates and expert limitations
-                remain visible throughout the matter.
+                Aerivis is designed to show what was recorded, measured and reviewed,
+                as well as what remains uncertain. A clinician considers health
+                context; a solicitor considers legal merits. Neither step is replaced
+                by an automated score.
               </p>
             </div>
           </div>
@@ -796,10 +923,10 @@ export default function AerivisPrototype() {
           <div className="evidence-ladder">
             {[
               [
-                "Concept ready",
-                "Integrated Collector",
-                "24-hour controlled airflow, cartridge identity, environmental sensing and secure export are defined for prototype development.",
-                "Engineering specification",
+                "Prototype ready",
+                "Resident case journey",
+                "The private check, consent controls, case timeline and role-scoped handoffs are demonstrated in this working prototype.",
+                "Digital workflow",
               ],
               [
                 "Validate next",
@@ -808,16 +935,16 @@ export default function AerivisPrototype() {
                 "Alpha → beta",
               ],
               [
-                "Highest risk",
-                "Viability workflow",
-                "PMA, PMAxx or an alternative must show repeatable live/dead discrimination across fungal genera and real environmental matrices.",
-                "Decision gates required",
+                "Clinical boundary",
+                "Health review is not a diagnosis",
+                "A paid clinical reviewer may consider consented health context, but environmental evidence does not prove illness causation.",
+                "Professional judgment",
               ],
               [
-                "Do not claim yet",
-                "Health causation",
-                "Exposure evidence may support professional interpretation. It is not, by itself, proof of infectivity, illness causation or clinical diagnosis.",
-                "Expert boundary",
+                "No guarantee",
+                "Compensation depends on legal merits",
+                "The partner law firm decides whether to act and what remedy to pursue. Aerivis cannot promise a settlement, award or repair outcome.",
+                "Solicitor-led claim",
               ],
             ].map(([state, title, body, foot]) => (
               <article className="evidence-card" key={title}>
@@ -834,9 +961,9 @@ export default function AerivisPrototype() {
             <p>
               Aerivis is proposed as decision-support and evidence infrastructure. It
               does not guarantee Awaab’s Law compliance, replace a competent building
-              investigation, issue a clinical diagnosis, or make an expert’s CPR 35
-              judgment. Those responsibilities remain with the relevant professional
-              and organisation.
+              investigation, issue a clinical diagnosis, establish legal liability
+              or guarantee compensation. Those responsibilities remain with the
+              relevant qualified professional and organisation.
             </p>
           </div>
         </div>
@@ -845,22 +972,22 @@ export default function AerivisPrototype() {
       <section className="partner-section" id="legal-partner">
         <div className="partner-grid">
           <div className="partner-copy">
-            <p className="section-kicker">For law firms and legal service groups</p>
+            <p className="section-kicker">Proposed commercial model</p>
             <h2>
-              Shape the evidence standard{" "}
-              <span> before the category is defined.</span>
+              The law firm is the partner.{" "}
+              <span>Specialists support the case.</span>
             </h2>
             <p>
-              We are seeking a legal design partner to co-create the instruction
-              criteria, disclosure structure, expert boundaries and first controlled
-              pilot. This is a service partnership—not another software licence.
-              Launch remains gated by validation, governance and non-compete
-              clearance.
+              The partner law firm owns the client relationship, assesses legal
+              merits and conducts the claim. Aerivis operates the evidence workflow.
+              Laboratories are engaged per case; clinical reviewers are paid for
+              consented work by the hour. Proposed economics remain subject to
+              regulation, contracting, validation and clearance.
             </p>
-            <ul className="partner-types" aria-label="Ideal legal partners">
-              <li>Housing disrepair practices</li>
-              <li>Defendant and insurer panels</li>
-              <li>Expert and litigation-service groups</li>
+            <ul className="partner-types" aria-label="Proposed service model">
+              <li>Primary partner · claimant law firm</li>
+              <li>Paid service · laboratory per case</li>
+              <li>Paid service · clinician by the hour</li>
             </ul>
           </div>
 
@@ -868,27 +995,27 @@ export default function AerivisPrototype() {
             {[
               [
                 "01",
-                "Legal design workshop",
-                "Define matter acceptance, evidential questions, disclosure needs, expert roles and commercial fit.",
-                "Start",
+                "Resident check and triage",
+                "Give mould-affected tenants a calm, private route to structure the property history and immediate concerns.",
+                "Acquisition",
               ],
               [
                 "02",
-                "Co-author the evidence protocol",
-                "Set the method record, custody standard, limitation schedule and bundle structure legal teams require.",
-                "Co-design",
+                "Law firm merit review",
+                "The partner law firm checks tenancy, notice, evidence, losses, limitation and legal prospects before accepting the client.",
+                "Partner",
               ],
               [
                 "03",
-                "Run a controlled matter pilot",
-                "Subject to clearance and validation gates, test the workflow on suitable pre-action and remediation matters.",
-                "Pilot",
+                "Evidence and clinical services",
+                "Aerivis coordinates field capture, the paid laboratory workflow and consented hourly clinical review where instructed.",
+                "Variable cost",
               ],
               [
                 "04",
-                "Scale the instruction model",
-                "Create a repeatable service for housing teams, legal panels and expert networks after pilot review.",
-                "Post-pilot",
+                "Repairs and compensation",
+                "The law firm pursues an appropriate remedy only where the evidence, instructions and legal merits justify it.",
+                "Outcome",
               ],
             ].map(([index, title, body, state]) => (
               <div className="roadmap-item" key={index}>
@@ -906,28 +1033,30 @@ export default function AerivisPrototype() {
 
       <section className="final-cta">
         <div className="final-card">
-          <p className="section-kicker">Legal design partners</p>
+          <p className="section-kicker">For tenants and families</p>
           <h2>
-            Help define the evidence standard
-            <em> your cases need.</em>
+            Living with mould?
+            <em>Start by protecting your story.</em>
           </h2>
           <div className="final-side">
             <p>
-              Use the working matter to align your litigation team, our technical
-              workflow and the first controlled legal pilot.
+              Take the private four-question check. No personal information is
+              collected in this prototype, and no legal or compensation outcome is
+              promised.
             </p>
-            <button className="dark-button" onClick={showDemo}>
-              Open the legal matter ↑
+            <button className="dark-button" onClick={showResidentCheck}>
+              Start the case check ↑
             </button>
           </div>
         </div>
 
         <footer className="footer">
           <p className="footer-copy">
-            Legal partnership prototype · July 2026. Product imagery is illustrative.
-            All matter data is fictional. Scientific, clinical and legal outputs
-            shown are proposed workflow examples and require validation, governance
-            and qualified professional review before operational use.
+            Resident support and legal partnership prototype · July 2026. Product
+            imagery is illustrative. All case data is fictional. Scientific,
+            clinical and legal outputs shown are proposed workflow examples and
+            require validation, governance and qualified professional review before
+            operational use.
           </p>
           <div className="footer-links">
             <a

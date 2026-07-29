@@ -6186,3 +6186,325 @@ input:focus-visible {
     font-size: 55px;
   }
 }
+
+/* Resident journey — quiet reassurance at the front, legal rigour underneath */
+
+.site-shell .resident-check-section {
+  position: relative;
+  overflow: hidden;
+  padding: 150px max(32px, calc((100vw - 1450px) / 2));
+  background:
+    linear-gradient(90deg, rgba(38, 173, 244, 0.08) 1px, transparent 1px)
+      0 0 / 9.2vw 100%,
+    var(--site-mist);
+}
+
+.site-shell .resident-check-section::before {
+  position: absolute;
+  top: -170px;
+  right: -120px;
+  width: 470px;
+  height: 470px;
+  border: 1px solid rgba(8, 127, 206, 0.18);
+  border-radius: 50%;
+  content: "";
+}
+
+.site-shell .resident-check-section::after {
+  position: absolute;
+  right: 105px;
+  bottom: -230px;
+  width: 390px;
+  height: 390px;
+  border: 78px solid rgba(38, 173, 244, 0.08);
+  border-radius: 50%;
+  content: "";
+}
+
+.site-shell .resident-check-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  max-width: 1450px;
+  margin: 0 auto;
+  align-items: stretch;
+  grid-template-columns: 0.74fr 1fr;
+  gap: clamp(60px, 8vw, 135px);
+}
+
+.site-shell .resident-check-intro {
+  display: flex;
+  flex-direction: column;
+}
+
+.site-shell .resident-check-intro h2 {
+  max-width: 670px;
+  margin-top: 34px;
+  font-family: var(--sans);
+  font-size: clamp(49px, 5.5vw, 82px);
+  font-weight: 520;
+  letter-spacing: -0.075em;
+  line-height: 0.94;
+}
+
+.site-shell .resident-check-intro h2 span {
+  display: block;
+  margin-top: 0.08em;
+  color: var(--site-azure);
+}
+
+.site-shell .resident-check-intro > p {
+  max-width: 530px;
+  margin-top: 34px;
+  color: #587482;
+  font-size: 15px;
+  line-height: 1.72;
+}
+
+.site-shell .resident-check-note {
+  display: grid;
+  max-width: 530px;
+  margin-top: auto;
+  padding-top: 38px;
+  border-top: 1px solid rgba(9, 36, 56, 0.2);
+  color: #607b88;
+  grid-template-columns: 38px 1fr;
+  gap: 16px;
+}
+
+.site-shell .resident-check-note > span {
+  color: var(--site-azure);
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.12em;
+}
+
+.site-shell .resident-check-note p {
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+.site-shell .intake-card {
+  position: relative;
+  display: flex;
+  min-height: 610px;
+  flex-direction: column;
+  padding: clamp(35px, 4.6vw, 68px);
+  background: var(--site-navy);
+  box-shadow: 0 45px 100px rgba(3, 28, 46, 0.16);
+  color: #fff;
+}
+
+.site-shell .intake-card::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 88px;
+  height: 88px;
+  border-top: 8px solid var(--site-azure-bright);
+  border-right: 8px solid var(--site-azure-bright);
+  content: "";
+}
+
+.site-shell .intake-progress {
+  display: grid;
+  color: rgba(255, 255, 255, 0.48);
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  grid-template-columns: auto minmax(120px, 220px);
+  gap: 22px;
+}
+
+.site-shell .intake-progress-track {
+  height: 1px;
+  align-self: center;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.site-shell .intake-progress-track i {
+  display: block;
+  height: 100%;
+  background: var(--site-azure-bright);
+  transition: width 260ms ease;
+}
+
+.site-shell .intake-question {
+  margin: auto 0;
+}
+
+.site-shell .intake-index {
+  display: block;
+  margin-bottom: 34px;
+  color: var(--site-azure-bright);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+
+.site-shell .intake-question h3,
+.site-shell .intake-outcome h3 {
+  max-width: 690px;
+  font-family: var(--sans);
+  font-size: clamp(34px, 3.4vw, 54px);
+  font-weight: 520;
+  letter-spacing: -0.065em;
+  line-height: 1;
+}
+
+.site-shell .intake-question p,
+.site-shell .intake-outcome > p {
+  max-width: 570px;
+  margin-top: 24px;
+  color: rgba(255, 255, 255, 0.57);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.site-shell .intake-actions {
+  display: grid;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.site-shell .intake-actions button {
+  display: flex;
+  min-height: 67px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  transition:
+    background 160ms ease,
+    color 160ms ease;
+}
+
+.site-shell .intake-actions button + button {
+  border-left: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.site-shell .intake-actions button:hover,
+.site-shell .intake-actions button:focus-visible {
+  outline: none;
+  background: var(--site-azure);
+  color: #fff;
+}
+
+.site-shell .intake-actions button span {
+  color: var(--site-azure-bright);
+}
+
+.site-shell .intake-actions button:hover span,
+.site-shell .intake-actions button:focus-visible span {
+  color: #fff;
+}
+
+.site-shell .intake-outcome {
+  margin: auto 0;
+}
+
+.site-shell .intake-outcome-label {
+  display: block;
+  margin-bottom: 30px;
+  color: var(--site-azure-bright);
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.site-shell .intake-outcome-actions {
+  display: flex;
+  align-items: center;
+  margin-top: 36px;
+  gap: 26px;
+}
+
+.site-shell .intake-outcome .primary-button {
+  border: 0;
+  cursor: pointer;
+}
+
+.site-shell .text-button {
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.72);
+  cursor: pointer;
+  font: inherit;
+  font-size: 10px;
+}
+
+.site-shell .intake-disclaimer {
+  max-width: 590px;
+  margin-top: 25px;
+  color: rgba(255, 255, 255, 0.36);
+  font-size: 8px;
+  letter-spacing: 0.03em;
+  line-height: 1.55;
+}
+
+@media (max-width: 900px) {
+  .site-shell .resident-check-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .site-shell .resident-check-note {
+    margin-top: 48px;
+  }
+}
+
+@media (max-width: 720px) {
+  .site-shell .resident-check-section {
+    padding: 95px 20px;
+    background: var(--site-mist);
+  }
+
+  .site-shell .resident-check-grid {
+    gap: 58px;
+  }
+
+  .site-shell .resident-check-intro h2 {
+    font-size: 49px;
+  }
+
+  .site-shell .intake-card {
+    min-height: 570px;
+    padding: 34px 24px;
+  }
+
+  .site-shell .intake-progress {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .site-shell .intake-question h3,
+  .site-shell .intake-outcome h3 {
+    font-size: 35px;
+  }
+
+  .site-shell .intake-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .site-shell .intake-actions button {
+    min-height: 54px;
+    border-left: 0 !important;
+  }
+
+  .site-shell .intake-actions button + button {
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .site-shell .intake-outcome-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
