@@ -278,7 +278,9 @@ export default function AerivisPrototype() {
     <main className="site-shell">
       <div className="announcement">
         <span className="live-dot" aria-hidden="true" />
-        Partner prototype · concept workflow · validation gates clearly marked
+        Partner release 03
+        <span className="announcement-separator" aria-hidden="true" />
+        Concept workflow · validation gates visible
       </div>
 
       <header className="topbar">
@@ -296,39 +298,56 @@ export default function AerivisPrototype() {
           <a href="#validation">Validation</a>
           <a href="/brand">Brand lab</a>
           <a className="nav-cta" href="#case-demo">
-            Open prototype <span aria-hidden="true">↗</span>
+            Enter the case <span aria-hidden="true">↘</span>
           </a>
         </nav>
       </header>
 
       <section className="hero" id="top">
+        <div className="hero-coordinate" aria-hidden="true">
+          53.4808° N · 2.2426° W
+        </div>
         <div className="hero-inner">
           <div className="hero-copy">
-            <p className="eyebrow">Environmental exposure intelligence</p>
+            <p className="eyebrow">Airborne evidence infrastructure</p>
             <h1>
-              Evidence that moves <em>with the case.</em>
+              <span>Make the invisible</span>
+              <em>admissible.</em>
             </h1>
             <p className="hero-lead">
-              Aerivis connects the resident report, the building, a controlled
-              24-hour air sample, laboratory analysis, clinical context and legal
-              review in one secure, traceable workflow.
+              Aerivis turns a resident’s report, a controlled air sample and expert
+              interpretation into one defensible record—from first concern to
+              verified remediation.
             </p>
             <div className="hero-actions">
               <button className="primary-button" onClick={showDemo}>
-                Run the partner demo <span aria-hidden="true">↓</span>
+                Start the live case <span aria-hidden="true">↘</span>
               </button>
               <a className="secondary-button" href="#system">
-                See the whole system <span aria-hidden="true">↘</span>
+                Explore the evidence chain <span aria-hidden="true">↓</span>
               </a>
             </div>
             <ul className="hero-assurance">
-              <li>Role-based workflow</li>
-              <li>Consent by purpose</li>
-              <li>Immutable custody trail</li>
+              <li>
+                <strong>01</strong>
+                Role-scoped
+              </li>
+              <li>
+                <strong>02</strong>
+                Consent-led
+              </li>
+              <li>
+                <strong>03</strong>
+                Custody-traced
+              </li>
             </ul>
           </div>
 
           <div className="device-stage" aria-label="Aerivis Collector concept">
+            <div className="device-label">
+              <span>Collector / C-014</span>
+              <span>Concept hardware</span>
+            </div>
             <div className="device-image-wrap">
               <Image
                 className="device-image"
@@ -354,31 +373,35 @@ export default function AerivisPrototype() {
             </div>
             <div className="device-badge">
               <div className="device-badge-head">
-                <span>Collector 014</span>
+                <span>Live capture</span>
                 <b className="live-dot" aria-hidden="true" />
               </div>
-              <strong>Sampling</strong>
-              <span>1.00 L/min · telemetry linked</span>
+              <strong>06:42:18</strong>
+              <span>1.00 L/min · sealed cartridge paired</span>
             </div>
+            <p className="device-caption">
+              Time-integrated air capture. Environmental context. One digital
+              provenance record.
+            </p>
           </div>
         </div>
 
         <div className="hero-metrics" aria-label="Awaab's Law timeframes">
           <div className="hero-metric">
             <strong>24h</strong>
-            <span>Emergency hazards: investigate and make safe</span>
+            <span>Emergency hazard response</span>
           </div>
           <div className="hero-metric">
             <strong>10</strong>
-            <span>Working days to investigate significant damp or mould</span>
+            <span>Working days to investigate</span>
           </div>
           <div className="hero-metric">
             <strong>3</strong>
-            <span>Working days to provide the written investigation summary</span>
+            <span>Working days for written summary</span>
           </div>
           <div className="hero-metric">
             <strong>5</strong>
-            <span>Working days after investigation to make the hazard safe</span>
+            <span>Working days to make safe</span>
           </div>
         </div>
       </section>
@@ -388,7 +411,10 @@ export default function AerivisPrototype() {
           <div className="section-heading">
             <p className="section-kicker">One evidence spine</p>
             <div>
-              <h2>Every specialist sees the same truth—at the right level.</h2>
+              <h2>
+                From air to action.
+                <span> One unbroken record.</span>
+              </h2>
               <p>
                 The market already assembles skilled field, laboratory, fungal,
                 medical and legal contributors. Aerivis turns that chain into an
@@ -422,11 +448,14 @@ export default function AerivisPrototype() {
         <div className="demo-header">
           <div>
             <p className="eyebrow">Interactive case workspace</p>
-            <h2>Follow one report from triage to verified remediation.</h2>
+            <h2>
+              The product is
+              <span> the proof.</span>
+            </h2>
           </div>
           <p>
-            Switch roles inside the prototype. Advance the case, change consent,
-            inspect live device telemetry and generate a local evidence pack.
+            Step into a working case. Switch roles, advance the evidence, control
+            consent and export a traceable pack—all without leaving the record.
           </p>
         </div>
 
@@ -703,7 +732,10 @@ export default function AerivisPrototype() {
         <div className="compare-grid">
           <div className="compare-intro">
             <p className="section-kicker">Competitor website review</p>
-            <h2>Keep the expertise. Upgrade the evidence architecture.</h2>
+            <h2>
+              Keep the expertise.
+              <span> Rebuild the evidence.</span>
+            </h2>
             <p>
               Genetix’s public website presents a strong multidisciplinary service:
               trained sampling, contract-lab sequencing, consented health-record
@@ -748,7 +780,10 @@ export default function AerivisPrototype() {
           <div className="section-heading">
             <p className="section-kicker">Honest by design</p>
             <div>
-              <h2>A compelling demo with the scientific gates left visible.</h2>
+              <h2>
+                Confidence is earned.
+                <span> Uncertainty stays visible.</span>
+              </h2>
               <p>
                 Aerivis’s technical thesis is plausible, but the interpretation layer
                 is not yet de-risked. The prototype makes provenance, uncertainty and
@@ -810,7 +845,10 @@ export default function AerivisPrototype() {
         <div className="partner-grid">
           <div className="partner-copy">
             <p className="section-kicker">Partner pathway</p>
-            <h2>Build the advantage before the market window closes.</h2>
+            <h2>
+              Turn the concept into
+              <span> the category standard.</span>
+            </h2>
             <p>
               The prototype is ready to align a hardware, laboratory, clinical and
               housing partner around one end-state. Commercial launch remains gated
@@ -861,8 +899,10 @@ export default function AerivisPrototype() {
 
       <section className="final-cta">
         <div className="final-card">
+          <p className="section-kicker">The partner proposition</p>
           <h2>
-            One case. Every expert. <em>No broken handoffs.</em>
+            One case. Every expert.
+            <em> No broken handoffs.</em>
           </h2>
           <div className="final-side">
             <p>
