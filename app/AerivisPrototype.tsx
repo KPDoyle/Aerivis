@@ -227,6 +227,18 @@ function downloadEvidencePack(stage: number, role: Role) {
   URL.revokeObjectURL(url);
 }
 
+function AerivisMark({ compact = false }: { compact?: boolean }) {
+  return (
+    <span
+      className={`brand-symbol${compact ? " compact" : ""}`}
+      aria-hidden="true"
+    >
+      <span className="brand-glyph" />
+      <span className="brand-orbit" />
+    </span>
+  );
+}
+
 export default function AerivisPrototype() {
   const [role, setRole] = useState<Role>("Housing operations");
   const [view, setView] = useState<View>("Case overview");
@@ -282,8 +294,11 @@ export default function AerivisPrototype() {
 
       <header className="topbar">
         <a className="wordmark" href="#top" aria-label="Aerivis home">
-          <span className="wordmark-mark" aria-hidden="true" />
-          <span className="wordmark-text">Aerivis</span>
+          <AerivisMark />
+          <span className="wordmark-lockup">
+            <span className="wordmark-text">Aerivis</span>
+            <span className="wordmark-tagline">Exposure intelligence</span>
+          </span>
         </a>
         <nav className="topnav" aria-label="Primary navigation">
           <a href="#system">System</a>
@@ -436,8 +451,8 @@ export default function AerivisPrototype() {
         <div className="app-frame">
           <aside className="app-rail" aria-label="Prototype navigation">
             <div className="app-brand">
-              <span className="app-brand-mark">A</span>
-              <span>
+              <AerivisMark compact />
+              <span className="app-brand-copy">
                 <strong>AERIVIS</strong>
                 <span>Compliance workspace</span>
               </span>
