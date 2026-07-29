@@ -55,3 +55,24 @@ test("removes the starter preview and ships product metadata", async () => {
   await access(new URL("public/favicon.ico", templateRoot));
   await assert.rejects(access(new URL("app/_sites-preview", templateRoot)));
 });
+
+test("ships a dedicated Vercel Next.js build target", async () => {
+  const [vercelJson, nextConfig, packageJson, vercelTsconfig] = await Promise.all([
+    readFile(new URL("vercel.json", templateRoot), "utf8"),
+    readFile(new URL("next.config.ts", templateRoot), "utf8"),
+    readFile(new URL("package.json", templateRoot), "utf8"),
+    readFile(new URL("tsconfig.vercel.json", templateRoot), "utf8"),
+  ]);
+
+  const vercel = JSON.parse(vercelJson);
+  const packageConfig = JSON.parse(packageJson);
+
+  assert.equal(vercel.framework, "nextjs");
+  assert.equal(vercel.buildCommand, "npm run build:vercel");
+  assert.equal(
+    packageConfig.scripts["build:vercel"],
+    "AERIVIS_DEPLOY_TARGET=vercel next build --webpack",
+  );
+  assert.match(nextConfig, /tsconfig\.vercel\.json/);
+  assert.doesNotMatch(vercelTsconfig, /cloudflare:workers/);
+});
