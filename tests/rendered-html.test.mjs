@@ -4,13 +4,13 @@ import test from "node:test";
 
 const templateRoot = new URL("../", import.meta.url);
 
-async function render() {
+async function render(pathname = "/") {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
   workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
   const { default: worker } = await import(workerUrl.href);
 
   return worker.fetch(
-    new Request("http://localhost/", {
+    new Request(`http://localhost${pathname}`, {
       headers: { accept: "text/html", host: "localhost" },
     }),
     {
@@ -75,4 +75,25 @@ test("ships a dedicated Vercel Next.js build target", async () => {
   );
   assert.match(nextConfig, /tsconfig\.vercel\.json/);
   assert.doesNotMatch(vercelTsconfig, /cloudflare:workers/);
+});
+
+test("ships the interactive Aerivis brand lab", async () => {
+  const [brandPage, brandStudio, sharedMark] = await Promise.all([
+    readFile(new URL("../app/brand/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/brand/BrandStudio.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/AerivisMark.tsx", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(brandPage, /Aerivis Brand Lab/);
+  assert.match(brandStudio, /Interactive Aerivis logo demo/);
+  assert.match(brandStudio, /Purposeful motion/);
+  assert.match(brandStudio, /Small-size clarity/);
+  assert.match(sharedMark, /brand-symbol/);
+
+  const response = await render("/brand");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /Aerivis Brand Lab/);
+  assert.match(html, /A mark for evidence/);
+  assert.match(html, /Brand audit/);
 });
