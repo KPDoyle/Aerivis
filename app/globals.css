@@ -133,46 +133,145 @@ input:focus-visible {
 .wordmark {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 13px;
   color: inherit;
   text-decoration: none;
 }
 
-.wordmark-mark {
+.brand-symbol {
   position: relative;
-  width: 30px;
-  height: 30px;
+  isolation: isolate;
+  display: inline-block;
+  overflow: hidden;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  border: 1px solid rgba(255, 255, 255, 0.66);
+  border-radius: 13px 13px 13px 5px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.7), transparent 34%),
+    linear-gradient(145deg, #aee8ff 0%, var(--azure-400) 42%, var(--azure-700) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.58),
+    inset 0 -8px 20px rgba(0, 79, 131, 0.2),
+    0 9px 28px rgba(20, 159, 232, 0.28);
+  transition:
+    box-shadow 240ms ease,
+    transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.brand-symbol::before {
+  position: absolute;
+  z-index: -1;
+  inset: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.19);
+  border-radius: 10px 10px 10px 3px;
+  content: "";
+}
+
+.brand-glyph {
+  position: absolute;
+  z-index: 1;
+  inset: 8px 8px 7px;
+  background: var(--azure-950);
+  clip-path: polygon(
+    44% 0,
+    56% 0,
+    100% 100%,
+    72% 100%,
+    50% 45%,
+    28% 100%,
+    0 100%
+  );
+}
+
+.brand-glyph::after {
+  position: absolute;
+  top: 65%;
+  left: 25%;
+  width: 50%;
+  height: 2px;
+  background: var(--azure-300);
+  content: "";
+}
+
+.brand-orbit {
+  position: absolute;
+  z-index: 2;
+  top: 12px;
+  left: 3px;
+  width: 32px;
+  height: 15px;
+  border: 1.5px solid rgba(255, 255, 255, 0.88);
+  border-left-color: transparent;
+  border-radius: 50%;
+  transform: rotate(-27deg);
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.brand-orbit::after {
+  position: absolute;
+  top: -2px;
+  right: 2px;
+  width: 5px;
+  height: 5px;
   border: 1px solid rgba(255, 255, 255, 0.78);
   border-radius: 50%;
-  box-shadow:
-    inset 0 0 0 5px rgba(56, 189, 248, 0.13),
-    0 0 24px rgba(56, 189, 248, 0.3);
-}
-
-.wordmark-mark::before,
-.wordmark-mark::after {
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  background: var(--azure-950);
+  box-shadow: 0 0 0 3px rgba(121, 214, 255, 0.22);
   content: "";
-  background: currentColor;
-  transform: translate(-50%, -50%);
 }
 
-.wordmark-mark::before {
-  width: 14px;
-  height: 1px;
+.brand-symbol.compact {
+  width: 34px;
+  height: 34px;
+  flex-basis: 34px;
+  border-radius: 11px 11px 11px 4px;
 }
 
-.wordmark-mark::after {
-  width: 1px;
+.brand-symbol.compact .brand-glyph {
+  inset: 7px;
+}
+
+.brand-symbol.compact .brand-orbit {
+  top: 10px;
+  left: 3px;
+  width: 28px;
   height: 14px;
 }
 
+.wordmark:hover .brand-symbol {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.64),
+    inset 0 -8px 20px rgba(0, 79, 131, 0.18),
+    0 12px 36px rgba(56, 189, 248, 0.43);
+  transform: translateY(-1px) rotate(-2deg);
+}
+
+.wordmark:hover .brand-orbit {
+  transform: rotate(-18deg);
+}
+
+.wordmark-lockup {
+  display: grid;
+  gap: 2px;
+}
+
 .wordmark-text {
-  font-size: 20px;
-  font-weight: 650;
-  letter-spacing: 0.22em;
+  font-size: 19px;
+  font-weight: 720;
+  letter-spacing: 0.2em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.wordmark-tagline {
+  color: var(--azure-300);
+  font-family: var(--mono);
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1;
   text-transform: uppercase;
 }
 
@@ -884,25 +983,19 @@ input:focus-visible {
   padding: 4px 10px 28px;
 }
 
-.app-brand-mark {
+.app-brand-copy {
   display: grid;
-  width: 32px;
-  height: 32px;
-  border-radius: 10px 10px 10px 2px;
-  background: linear-gradient(135deg, var(--azure-300), white);
-  color: var(--deep);
-  font-family: var(--serif);
-  font-size: 18px;
-  place-items: center;
+  gap: 3px;
 }
 
-.app-brand strong {
+.app-brand-copy strong {
   display: block;
   font-size: 13px;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.16em;
+  line-height: 1;
 }
 
-.app-brand span {
+.app-brand-copy > span {
   color: rgba(255, 255, 255, 0.45);
   font-family: var(--mono);
   font-size: 8px;
@@ -2245,6 +2338,10 @@ input:focus-visible {
 }
 
 @media (max-width: 580px) {
+  .wordmark-tagline {
+    display: none;
+  }
+
   .wordmark-text {
     font-size: 16px;
   }
