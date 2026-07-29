@@ -48,6 +48,15 @@ npm test
 The test command builds the production application and checks the rendered
 prototype and product metadata.
 
+## Deployment targets
+
+- `npm run build` produces the Cloudflare/Sites `dist/` build.
+- `npm run build:vercel` produces the standard Next.js `.next/` build required
+  by Vercel.
+
+The checked-in `vercel.json` selects the Vercel-specific build automatically
+when the GitHub repository is deployed there.
+
 ## Main project areas
 
 - `app/AerivisPrototype.tsx` — interactive partner demonstration
