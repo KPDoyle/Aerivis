@@ -1,323 +1,288 @@
 "use client";
 
-import type { CSSProperties } from "react";
 import Link from "next/link";
+import type { CSSProperties } from "react";
 import { useState } from "react";
 import AerivisMark from "../AerivisMark";
 
-type Tone = "azure" | "light" | "mono";
+type CanvasMode = "deep" | "light" | "mono";
+type LogoView = "lockup" | "mark";
 
-const reviewItems = [
-  {
-    score: "Strong",
-    title: "Strategic relevance",
-    body: "The air-channel A, orbit and capture point connect naturally to airborne evidence, measurement and a joined-up case.",
-  },
-  {
-    score: "Strong",
-    title: "Distinctive silhouette",
-    body: "The asymmetric tile and crossing orbit are recognisable without depending on the company name.",
-  },
-  {
-    score: "Refine",
-    title: "Small-size clarity",
-    body: "The orbit detail needs a simplified micro-mark below 24px so favicons and device indicators stay crisp.",
-  },
-  {
-    score: "Build",
-    title: "Asset governance",
-    body: "A launch identity needs master artwork, clear-space rules, colour values and locked assets for partners.",
-  },
-];
-
-const applications = [
-  {
-    className: "application-navigation",
-    label: "Platform navigation",
-    detail: "Primary lockup · dark environment",
-  },
-  {
-    className: "application-report",
-    label: "Evidence report",
-    detail: "Monochrome-safe · formal output",
-  },
-  {
-    className: "application-device",
-    label: "Collector identity",
-    detail: "Mark-only · physical product",
-  },
+const audit = [
+  ["Distinctive", "92"],
+  ["Relevant", "95"],
+  ["Scalable", "88"],
+  ["Ownable", "86"],
 ];
 
 export default function BrandStudio() {
-  const [tone, setTone] = useState<Tone>("azure");
-  const [size, setSize] = useState(52);
-  const [motion, setMotion] = useState(false);
-
-  const previewStyle = {
-    "--preview-scale": String(size / 38),
-  } as CSSProperties;
+  const [mode, setMode] = useState<CanvasMode>("deep");
+  const [view, setView] = useState<LogoView>("lockup");
+  const [motion, setMotion] = useState(true);
 
   return (
-    <main className="brand-studio">
-      <header className="brand-studio-nav">
-        <Link className="brand-studio-home" href="/" aria-label="Return to Aerivis">
+    <main className="identity-page">
+      <header className="identity-nav">
+        <Link className="identity-home" href="/" aria-label="Aerivis home">
           <AerivisMark compact />
-          <span>
-            <strong>AERIVIS</strong>
-            <small>Brand lab · v0.2</small>
-          </span>
+          <span>AERIVIS</span>
         </Link>
-        <Link className="brand-back-link" href="/">
-          Return to platform demo <span aria-hidden="true">↗</span>
+        <span className="identity-edition">Identity / Direction 02</span>
+        <Link className="identity-exit" href="/">
+          Platform demo <span aria-hidden="true">↗</span>
         </Link>
       </header>
 
-      <section className="brand-studio-hero">
-        <div className="brand-studio-intro">
-          <p className="brand-lab-kicker">Identity review · live system</p>
+      <section className="identity-hero">
+        <div className="identity-hero-copy">
+          <p className="identity-overline">Environmental exposure intelligence</p>
           <h1>
-            A mark for evidence <em>in motion.</em>
+            Air becomes
+            <span>evidence.</span>
           </h1>
-          <p>
-            Aerivis needs to feel scientifically credible, operationally serious and
-            modern enough to lead a new category. The current direction has a strong
-            strategic idea; this lab tests whether it can behave like a mature brand.
+          <p className="identity-hero-note">
+            A sharper identity for a system that captures an invisible signal and
+            carries it, intact, through every handoff.
           </p>
-          <div className="brand-verdict">
-            <span>Review verdict</span>
-            <strong>Promising system. One refinement round from launch-ready.</strong>
-          </div>
         </div>
 
-        <div className="brand-lab" aria-label="Interactive Aerivis logo demo">
-          <div className={`brand-lab-stage tone-${tone} ${motion ? "motion-on" : ""}`}>
-            <div className="brand-lab-lockup" style={previewStyle}>
+        <div className="identity-live" aria-label="Interactive Aerivis logo demo">
+          <div
+            className={`identity-canvas canvas-${mode} view-${view} ${
+              motion ? "is-live" : ""
+            }`}
+          >
+            <span className="identity-canvas-index">A / 01</span>
+            <div className="identity-lockup">
               <AerivisMark />
-              <span className="brand-lab-wordmark">
-                <strong>AERIVIS</strong>
-                <small>Exposure intelligence</small>
-              </span>
+              {view === "lockup" ? (
+                <span className="identity-wordmark">
+                  <strong>AERIVIS</strong>
+                  <small>Exposure intelligence</small>
+                </span>
+              ) : null}
             </div>
-            <span className="brand-lab-readout">
-              {size}px · {tone} · {motion ? "motion" : "static"}
+            <span className="identity-canvas-status">
+              <i aria-hidden="true" />
+              Live identity system
             </span>
           </div>
 
-          <div className="brand-controls">
-            <fieldset>
-              <legend>Environment</legend>
-              <div className="brand-segmented">
-                {(["azure", "light", "mono"] as Tone[]).map((item) => (
+          <div className="identity-console">
+            <div className="identity-control">
+              <span>Canvas</span>
+              <div>
+                {(["deep", "light", "mono"] as CanvasMode[]).map((item) => (
                   <button
-                    className={tone === item ? "active" : ""}
-                    key={item}
+                    className={mode === item ? "active" : ""}
                     type="button"
-                    aria-pressed={tone === item}
-                    onClick={() => setTone(item)}
+                    key={item}
+                    aria-pressed={mode === item}
+                    onClick={() => setMode(item)}
                   >
                     {item}
                   </button>
                 ))}
               </div>
-            </fieldset>
-
-            <label className="brand-size-control">
-              <span>
-                Mark size <strong>{size}px</strong>
-              </span>
-              <input
-                type="range"
-                min="24"
-                max="72"
-                value={size}
-                onChange={(event) => setSize(Number(event.target.value))}
-              />
-            </label>
-
-            <label className="brand-motion-control">
-              <span>
-                <strong>Purposeful motion</strong>
-                <small>Digital product contexts only</small>
-              </span>
-              <input
-                type="checkbox"
-                checked={motion}
-                onChange={(event) => setMotion(event.target.checked)}
-              />
-            </label>
-          </div>
-        </div>
-      </section>
-
-      <section className="brand-review-section">
-        <div className="brand-section-heading">
-          <p className="brand-lab-kicker">Brand audit</p>
-          <div>
-            <h2>What an established brand team would test.</h2>
-            <p>
-              The question is not whether the mark looks attractive at one size. It is
-              whether it stays recognisable, controlled and credible across every
-              touchpoint.
-            </p>
-          </div>
-        </div>
-
-        <div className="brand-review-grid">
-          {reviewItems.map((item, index) => (
-            <article key={item.title}>
-              <span className="brand-review-index">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <span className={`brand-review-score score-${item.score.toLowerCase()}`}>
-                {item.score}
-              </span>
-              <h3>{item.title}</h3>
-              <p>{item.body}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="brand-scale-section">
-        <div className="brand-section-heading">
-          <p className="brand-lab-kicker">Responsive identity</p>
-          <div>
-            <h2>One idea, calibrated for the context.</h2>
-            <p>
-              Mature systems do not force one ornate file everywhere. They define a
-              primary lockup, a compact product mark and a simplified micro-mark.
-            </p>
-          </div>
-        </div>
-
-        <div className="brand-scale-grid">
-          <article className="scale-card scale-primary">
-            <div className="scale-preview">
-              <AerivisMark />
-              <span>
-                <strong>AERIVIS</strong>
-                <small>Exposure intelligence</small>
-              </span>
             </div>
-            <div>
-              <strong>Primary lockup</strong>
-              <span>Website, proposals, partner materials</span>
-            </div>
-          </article>
 
-          <article className="scale-card scale-compact">
-            <div className="scale-preview">
-              <AerivisMark compact />
-              <strong>AERIVIS</strong>
-            </div>
-            <div>
-              <strong>Compact lockup</strong>
-              <span>Application navigation, narrow formats</span>
-            </div>
-          </article>
-
-          <article className="scale-card scale-micro">
-            <div className="micro-mark" aria-label="Proposed simplified micro-mark">
-              A
-            </div>
-            <div>
-              <strong>Micro-mark · proposed</strong>
-              <span>Favicon, alerts, device status under 24px</span>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section className="brand-application-section">
-        <div className="brand-section-heading">
-          <p className="brand-lab-kicker">Application test</p>
-          <div>
-            <h2>The identity has to work where trust is earned.</h2>
-            <p>
-              Digital casework, formal evidence and physical sampling each demand a
-              different level of expression while preserving one recognisable system.
-            </p>
-          </div>
-        </div>
-
-        <div className="brand-application-grid">
-          {applications.map((item) => (
-            <article className={item.className} key={item.label}>
-              <div className="application-canvas">
-                {item.className === "application-navigation" ? (
-                  <>
-                    <span className="application-lockup">
-                      <AerivisMark compact />
-                      <strong>AERIVIS</strong>
-                    </span>
-                    <span className="application-nav-lines">
-                      <i />
-                      <i />
-                      <i />
-                    </span>
-                  </>
-                ) : null}
-
-                {item.className === "application-report" ? (
-                  <>
-                    <span className="report-mark">
-                      <span className="micro-mark">A</span>
-                      <strong>AERIVIS</strong>
-                    </span>
-                    <span className="report-copy">
-                      <small>Evidence record</small>
-                      <strong>Environmental exposure summary</strong>
-                      <i />
-                      <i />
-                      <i />
-                    </span>
-                  </>
-                ) : null}
-
-                {item.className === "application-device" ? (
-                  <span className="device-application-shell">
-                    <span className="device-application-screen">SAMPLING</span>
-                    <AerivisMark />
-                  </span>
-                ) : null}
+            <div className="identity-control">
+              <span>Expression</span>
+              <div>
+                {(["lockup", "mark"] as LogoView[]).map((item) => (
+                  <button
+                    className={view === item ? "active" : ""}
+                    type="button"
+                    key={item}
+                    aria-pressed={view === item}
+                    onClick={() => setView(item)}
+                  >
+                    {item}
+                  </button>
+                ))}
               </div>
-              <footer>
-                <strong>{item.label}</strong>
-                <span>{item.detail}</span>
-              </footer>
-            </article>
+            </div>
+
+            <button
+              className={`identity-motion ${motion ? "active" : ""}`}
+              type="button"
+              aria-pressed={motion}
+              onClick={() => setMotion((current) => !current)}
+            >
+              <span>
+                Motion
+                <small>Purposeful motion only</small>
+              </span>
+              <i aria-hidden="true" />
+            </button>
+          </div>
+        </div>
+
+        <div className="identity-scroll-cue">
+          <span>Explore the system</span>
+          <i aria-hidden="true" />
+        </div>
+      </section>
+
+      <div className="identity-marquee" aria-hidden="true">
+        <span>AIR</span>
+        <i />
+        <span>CAPTURE</span>
+        <i />
+        <span>TRACE</span>
+        <i />
+        <span>EVIDENCE</span>
+        <i />
+        <span>TRUST</span>
+      </div>
+
+      <section className="identity-rationale">
+        <div className="identity-section-label">
+          <span>01</span>
+          <p>Design rationale</p>
+        </div>
+        <div className="identity-rationale-main">
+          <h2>Less symbol.<br />More signal.</h2>
+          <p>
+            The previous tile and orbit carried too much visual furniture. Direction
+            02 removes the container and reduces the idea to two elements: an
+            air-formed A and a trace line ending in a verified point.
+          </p>
+        </div>
+        <div className="identity-principles">
+          <article>
+            <span>01 / Air</span>
+            <strong>Open geometry</strong>
+            <p>The rising form feels breathable, technical and directional.</p>
+          </article>
+          <article>
+            <span>02 / Evidence</span>
+            <strong>Unbroken trace</strong>
+            <p>A single line carries the signal through a defined evidence point.</p>
+          </article>
+          <article>
+            <span>03 / System</span>
+            <strong>Built to reduce</strong>
+            <p>The same mark holds from product interface to device and report.</p>
+          </article>
+        </div>
+      </section>
+
+      <section className="identity-audit">
+        <div className="identity-audit-head">
+          <div className="identity-section-label">
+            <span>02</span>
+            <p>Brand stress test</p>
+          </div>
+          <h2>Designed to survive the real world.</h2>
+          <p>
+            The new direction trades decoration for recognition. It remains clear in
+            motion, in monochrome and at the compact sizes where the first concept
+            became fragile.
+          </p>
+        </div>
+
+        <div className="identity-scoreboard">
+          {audit.map(([label, score]) => (
+            <div key={label}>
+              <span>{label}</span>
+              <strong>{score}</strong>
+              <i style={{ "--score": `${score}%` } as CSSProperties} />
+            </div>
           ))}
         </div>
       </section>
 
-      <section className="brand-next-section">
-        <div>
-          <p className="brand-lab-kicker">Recommendation</p>
-          <h2>Keep the concept. Simplify the smallest expression.</h2>
+      <section className="identity-uses">
+        <div className="identity-section-label">
+          <span>03</span>
+          <p>Applied identity</p>
         </div>
-        <div className="brand-next-list">
-          <span>
-            <b>01</b>
-            Commission master vector artwork and optical corrections.
-          </span>
-          <span>
-            <b>02</b>
-            Approve a micro-mark, monochrome master and minimum-size rule.
-          </span>
-          <span>
-            <b>03</b>
-            Complete trademark clearance before external launch.
-          </span>
-          <span>
-            <b>04</b>
-            Publish one controlled partner asset pack and usage guide.
-          </span>
+        <div className="identity-use-grid">
+          <article className="identity-use-product">
+            <header>
+              <span>Product / Navigation</span>
+              <small>Dark expression</small>
+            </header>
+            <div className="identity-product-shell">
+              <div className="identity-product-rail">
+                <span className="identity-mini-lockup">
+                  <AerivisMark compact />
+                  <strong>AERIVIS</strong>
+                </span>
+                <i />
+                <i />
+                <i />
+                <i />
+              </div>
+              <div className="identity-product-screen">
+                <span>CASE / AV-26-0418</span>
+                <strong>Evidence chain</strong>
+                <div>
+                  <i />
+                  <i />
+                  <i />
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article className="identity-use-device">
+            <header>
+              <span>Collector / Hardware</span>
+              <small>Mark expression</small>
+            </header>
+            <div className="identity-device">
+              <span className="identity-device-screen">
+                <small>Air sample</small>
+                <strong>Sampling</strong>
+                <i />
+              </span>
+              <AerivisMark />
+            </div>
+          </article>
+
+          <article className="identity-use-report">
+            <header>
+              <span>Evidence / Formal output</span>
+              <small>Monochrome expression</small>
+            </header>
+            <div className="identity-report">
+              <span className="identity-report-brand">
+                <AerivisMark compact />
+                <strong>AERIVIS</strong>
+              </span>
+              <p>Environmental exposure evidence</p>
+              <h3>Case AV-26-0418</h3>
+              <div>
+                <i />
+                <i />
+                <i />
+              </div>
+              <small>Controlled report / 29.07.26</small>
+            </div>
+          </article>
         </div>
       </section>
 
-      <footer className="brand-studio-footer">
-        <span>Aerivis identity prototype · partner review</span>
-        <Link href="/">Open the platform demonstration →</Link>
+      <section className="identity-decision">
+        <p className="identity-overline">Recommendation</p>
+        <h2>
+          Advance direction 02.
+          <span>Optically refine before registration.</span>
+        </h2>
+        <div>
+          <p>
+            The strategic idea is now clear enough to own: invisible air becomes a
+            visible, traceable evidence signal.
+          </p>
+          <Link href="/">Return to the Aerivis platform <span>↗</span></Link>
+        </div>
+      </section>
+
+      <footer className="identity-footer">
+        <span>© 2026 Aerivis</span>
+        <span>Identity prototype / Partner review</span>
       </footer>
     </main>
   );
