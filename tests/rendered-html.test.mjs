@@ -50,6 +50,8 @@ test("removes the starter preview and ships product metadata", async () => {
   assert.match(page, /AerivisPrototype/);
   assert.match(layout, /Environmental exposure intelligence, end to end/);
   assert.match(layout, /\/og\.png/);
+  assert.match(layout, /\/favicon\.ico/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
-  await assert.rejects(access(new URL("../app/_sites-preview", templateRoot)));
+  await access(new URL("public/favicon.ico", templateRoot));
+  await assert.rejects(access(new URL("app/_sites-preview", templateRoot)));
 });

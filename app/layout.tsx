@@ -18,6 +18,13 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Aerivis | Environmental Exposure Intelligence",
     description:
       "A partner prototype for end-to-end housing exposure evidence, from report and sampling to remediation and legal handoff.",
+    icons: {
+      icon: [
+        { url: "/favicon.svg", type: "image/svg+xml" },
+        { url: "/favicon.ico", sizes: "32x32" },
+      ],
+      shortcut: "/favicon.ico",
+    },
     openGraph: {
       title: "Aerivis",
       description: "Environmental exposure intelligence, end to end.",
